@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verneombud – iframe test</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #003087;
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #111;
+      margin-bottom: 12px;
+    }
+
+    p {
+      color: #555;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    button {
+      background: #f0f4ff;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 14px 20px;
+      font-size: 15px;
+      color: #003087;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    button:hover {
+      border-color: #003087;
+      background: #e6eeff;
+    }
+
+    .result {
+      background: #eaf4ec;
+      border-left: 4px solid #2e7d4f;
+      border-radius: 6px;
+      padding: 20px;
+      text-align: left;
+      color: #1a4a2a;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .restart {
+      background: #003087;
+      color: white;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .restart:hover {
+      background: #00256b;
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Steg 1 -->
+  <div class="step active" id="step-1">
+    <div class="badge">Verneombud</div>
+    <h1>Kva type samtale skal du ha?</h1>
+    <p>Vel situasjonen som passar best, så får du forslag til spørsmål du kan bruke.</p>
+    <div class="options">
+      <button onclick="goto('step-2a')">🔍 Eg har fanga opp noko som uroar meg</button>
+      <button onclick="goto('step-2b')">📋 Oppfølgingssamtale med medarbeidar</button>
+      <button onclick="goto('step-2c')">🏗️ Organisasjonsendring er på gang</button>
+    </div>
+  </div>
+
+  <!-- Steg 2a -->
+  <div class="step" id="step-2a">
+    <div class="badge">Bekymringssamtale</div>
+    <h1>Kva handlar uroa om?</h1>
+    <div class="options">
+      <button onclick="goto('result-a1')">Psykososialt – konfliktar, press, utanforskap</button>
+      <button onclick="goto('result-a2')">Fysisk arbeidsmiljø – utstyr, lokale, sikkerheit</button>
+      <button onclick="goto('result-a3')">Eg er usikker – treng å kartlegge</button>
+    </div>
+  </div>
+
+  <!-- Steg 2b -->
+  <div class="step" id="step-2b">
+    <div class="badge">Oppfølging</div>
+    <h1>Kva er utgangspunktet?</h1>
+    <div class="options">
+      <button onclick="goto('result-b1')">Etter ei hending eller avvik</button>
+      <button onclick="goto('result-b2')">Rutineprega – ingen spesiell grunn</button>
+    </div>
+  </div>
+
+  <!-- Steg 2c -->
+  <div class="step" id="step-2c">
+    <div class="badge">Organisasjonsendring</div>
+    <h1>Kvar er de i prosessen?</h1>
+    <div class="options">
+      <button onclick="goto('result-c1')">Tidleg – endringa er ikkje kommunisert enno</button>
+      <button onclick="goto('result-c2')">Undervegs – folk veit, men er usikre</button>
+    </div>
+  </div>
+
+  <!-- Resultat a1 -->
+  <div class="step" id="result-a1">
+    <div class="badge">Spørsmål du kan bruke</div>
+    <h1>Psykososialt arbeidsmiljø</h1>
+    <div class="result">
+      • Korleis opplever du arbeidsdagen din for tida?<br><br>
+      • Er det noko i arbeidsmiljøet som påverkar deg negativt – og i så fall: kva?<br><br>
+      • Kjenner du at du kan ta opp bekymringar med leiinga utan å frykte konsekvensar?<br><br>
+      • Har du det du treng for å gjere jobben din utan uforholdsmessig belastning?
+    </div>
+    <button class="restart" onclick="goto('step-1')">↩ Start på nytt</button>
+  </div>
+
+  <!-- Resultat a2 -->
+  <div class="step" id="result-a2">
+    <div class="badge">Spørsmål du kan bruke</div>
+    <h1>Fysisk arbeidsmiljø</h1>
+    <div class="result">
+      • Kva konkret er det som ikkje fungerer – og kor lenge har det vore slik?<br><br>
+      • Er dette meldt i Synergi, eller er det noko som hindrar at det blir meldt?<br><br>
+      • Kven har ansvar for dette i dag – og veit dei om det?<br><br>
+      • Korleis påverkar dette den daglege arbeidssituasjonen din?
+    </div>
+    <button class="restart" onclick="goto('step-1')">↩ Start på nytt</button>
+  </div>
+
+  <!-- Resultat a3 -->
+  <div class="step" id="result-a3">
+    <div class="badge">Spørsmål du kan bruke</div>
+    <h1>Kartleggingssamtale</h1>
+    <div class="result">
+      • Viss du skulle beskrive arbeidsmiljøet her med tre ord – kva ville det vere?<br><br>
+      • Er det noko du opplever ofte, som du trur leiinga ikkje veit om?<br><br>
+      • Kva skal til for at du trivst betre på jobb?<br><br>
+      • Er det noko du vil at eg som verneombod skal følgje opp vidare?
+    </div>
+    <button class="restart" onclick="goto('step-1')">↩ Start på nytt</button>
+  </div>
+
+  <!-- Resultat b1 -->
+  <div class="step" id="result-b1">
+    <div class="badge">Spørsmål du kan bruke</div>
+    <h1>Etter hending / avvik</h1>
+    <div class="result">
+      • Korleis har du det etter det som skjedde?<br><br>
+      • Kva tenker du gjekk gale – og kva kunne vorte gjort annleis?<br><br>
+      • Kjenner du deg trygg nok til å melde liknande ting vidare neste gong?<br><br>
+      • Er det system, rutinar eller ressursar som mangla?
+    </div>
+    <button class="restart" onclick="goto('step-1')">↩ Start på nytt</button>
+  </div>
+
+  <!-- Resultat b2 -->
+  <div class="step" id="result-b2">
+    <div class="badge">Spørsmål du kan bruke</div>
+    <h1>Rutineoppfølging</h1>
+    <div class="result">
+      • Korleis opplever du at verneombodsrolla fungerer i din avdeling?<br><br>
+      • Kva saker er du mest oppteken av akkurat no?<br><br>
+      • Kjenner du at du har tid og rom til å utøve vervet?<br><br>
+      • Er det noko eg som hovudverneombod / VO på nivå 2 bør vite om?
+    </div>
+    <button class="restart" onclick="goto('step-1')">↩ Start på nytt</button>
+  </div>
+
+  <!-- Resultat c1 -->
+  <div class="step" id="result-c1">
+    <div class="badge">Spørsmål du kan bruke</div>
+    <h1>Tidleg fase – endring ikkje kommunisert</h1>
+    <div class="result">
+      • Når planlegg leiinga å informere dei tilsette – og korleis?<br><br>
+      • Korleis vil verneombodet bli involvert i prosessen framover?<br><br>
+      • Er det gjennomført risikovurdering av arbeidsmiljøkonsekvensane?<br><br>
+      • Kva er planen for å fange opp reaksjonar og bekymringar undervegs?
+    </div>
+    <button class="restart" onclick="goto('step-1')">↩ Start på nytt</button>
+  </div>
+
+  <!-- Resultat c2 -->
+  <div class="step" id="result-c2">
+    <div class="badge">Spørsmål du kan bruke</div>
+    <h1>Undervegs i endring</h1>
+    <div class="result">
+      • Kva er det folk er mest usikre på – og er det svara på desse spørsmåla?<br><br>
+      • Er det etablert ein arena der tilsette kan ta opp bekymringar?<br><br>
+      • Kva seier Synergi-meldingane om stemningsleiet?<br><br>
+      • Kva treng verneombodet frå leiinga for å gjere jobben sin i denne perioden?
+    </div>
+    <button class="restart" onclick="goto('step-1')">↩ Start på nytt</button>
+  </div>
+
+</div>
+
+<script>
+  function goto(id) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+</script>
+
+</body>
+</html>
